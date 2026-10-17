@@ -467,7 +467,129 @@ function RevisionBanner() {
   );
 }
 
+function SuccessModal({ isOpen, onClose, formData }: { isOpen: boolean; onClose: () => void; formData: { name: string; level: string } }) {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
+      <div className="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl relative animate-scaleIn">
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+        >
+          <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        {/* Success icon */}
+        <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30">
+          <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+
+        <h3 className="text-2xl font-bold text-gray-900 text-center mb-2">
+          Thank You, {formData.name || 'Student'}! 🎉
+        </h3>
+        <p className="text-gray-600 text-center mb-6">
+          Your free trial request has been received. We'll get back to you within 24 hours.
+        </p>
+
+        {/* Next steps */}
+        <div className="bg-indigo-50 rounded-2xl p-5 mb-6">
+          <h4 className="font-semibold text-indigo-900 mb-3 text-sm uppercase tracking-wide">What's Next?</h4>
+          <ul className="space-y-2.5 text-sm text-indigo-800">
+            <li className="flex items-start gap-2">
+              <span className="text-indigo-500 font-bold">1.</span>
+              <span>We'll review your details and match you with the perfect tutor</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-indigo-500 font-bold">2.</span>
+              <span>Our team will call or WhatsApp you to schedule your FREE trial</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-indigo-500 font-bold">3.</span>
+              <span>Attend your personalised trial lesson — no commitment needed!</span>
+            </li>
+          </ul>
+        </div>
+
+        {/* Quick contact options */}
+        <div className="space-y-3">
+          <p className="text-sm text-gray-500 text-center">Want to reach us faster?</p>
+          <div className="grid grid-cols-2 gap-3">
+            <a
+              href="tel:07576996755"
+              className="flex items-center justify-center gap-2 bg-green-500 text-white py-3 rounded-xl text-sm font-semibold hover:bg-green-600 transition-colors"
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+              </svg>
+              Call Now
+            </a>
+            <a
+              href="https://wa.me/447576996755"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 bg-emerald-500 text-white py-3 rounded-xl text-sm font-semibold hover:bg-emerald-600 transition-colors"
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+              WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Contact() {
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    level: '',
+    message: '',
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    // Build WhatsApp message with form details
+    const fullName = `${formData.firstName} ${formData.lastName}`.trim();
+    const whatsappMessage = encodeURIComponent(
+      `🎓 *Free Trial Request - Genius Study Circle*\n\n` +
+      `👤 *Name:* ${fullName}\n` +
+      `📧 *Email:* ${formData.email}\n` +
+      `📞 *Phone:* ${formData.phone}\n` +
+      `📚 *Level:* ${formData.level}\n` +
+      `💬 *Message:* ${formData.message || 'N/A'}\n\n` +
+      `I'd like to book my FREE trial lesson!`
+    );
+
+    // Simulate a brief loading state for UX
+    await new Promise(resolve => setTimeout(resolve, 1200));
+
+    // Open WhatsApp with pre-filled message (fallback delivery method)
+    window.open(`https://wa.me/447576996755?text=${whatsappMessage}`, '_blank');
+
+    setIsSubmitting(false);
+    setShowSuccess(true);
+    setFormData({ firstName: '', lastName: '', email: '', phone: '', level: '', message: '' });
+  };
+
   return (
     <section id="contact" className="py-20 lg:py-28 bg-gradient-to-b from-white to-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -568,12 +690,16 @@ function Contact() {
           {/* Contact Form */}
           <div className="bg-white rounded-2xl border border-gray-100 p-6 lg:p-8 shadow-sm">
             <h3 className="text-xl font-bold text-gray-900 mb-6">Send us a message</h3>
-            <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-5" onSubmit={handleSubmit}>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1.5">First Name</label>
                   <input
                     type="text"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    required
                     className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
                     placeholder="John"
                   />
@@ -582,6 +708,10 @@ function Contact() {
                   <label className="block text-sm font-medium text-gray-700 mb-1.5">Last Name</label>
                   <input
                     type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    required
                     className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
                     placeholder="Doe"
                   />
@@ -591,6 +721,10 @@ function Contact() {
                 <label className="block text-sm font-medium text-gray-700 mb-1.5">Email</label>
                 <input
                   type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
                   className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
                   placeholder="john@example.com"
                 />
@@ -599,23 +733,36 @@ function Contact() {
                 <label className="block text-sm font-medium text-gray-700 mb-1.5">Phone</label>
                 <input
                   type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  required
                   className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
                   placeholder="07XXX XXXXXX"
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1.5">Level of Study</label>
-                <select className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all bg-white">
+                <select
+                  name="level"
+                  value={formData.level}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all bg-white"
+                >
                   <option value="">Select level...</option>
                   <option value="11+">11+ Preparation</option>
-                  <option value="gcse">GCSE</option>
-                  <option value="alevel">A-Level</option>
-                  <option value="sqa">Higher SQA</option>
+                  <option value="GCSE">GCSE</option>
+                  <option value="A-Level">A-Level</option>
+                  <option value="Higher SQA">Higher SQA</option>
                 </select>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1.5">Message</label>
                 <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
                   rows={4}
                   className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all resize-none"
                   placeholder="Tell us about your learning goals..."
@@ -623,14 +770,35 @@ function Contact() {
               </div>
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-indigo-500/30 transition-all transform hover:scale-[1.02]"
+                disabled={isSubmitting}
+                className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-indigo-500/30 transition-all transform hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
               >
-                Book FREE Trial Lesson 🎓
+                {isSubmitting ? (
+                  <>
+                    <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Sending...
+                  </>
+                ) : (
+                  <>Book FREE Trial Lesson 🎓</>
+                )}
               </button>
+              <p className="text-xs text-gray-400 text-center">
+                By submitting, you'll be redirected to WhatsApp to confirm your booking.
+              </p>
             </form>
           </div>
         </div>
       </div>
+
+      {/* Success Modal */}
+      <SuccessModal
+        isOpen={showSuccess}
+        onClose={() => setShowSuccess(false)}
+        formData={{ name: formData.firstName, level: formData.level }}
+      />
     </section>
   );
 }
