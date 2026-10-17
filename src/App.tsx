@@ -15,9 +15,11 @@ function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 md:h-20">
           <a href="#" className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center">
-              <span className="text-white font-bold text-lg">G</span>
-            </div>
+            <img 
+              src="/logo.png" 
+              alt="Genius Study Circle Logo" 
+              className="w-10 h-10 object-contain"
+            />
             <span className={`font-bold text-lg md:text-xl ${scrolled ? 'text-gray-900' : 'text-white'}`}>
               Genius Study Circle
             </span>
@@ -847,9 +849,11 @@ function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center">
-                <span className="text-white font-bold text-lg">G</span>
-              </div>
+              <img 
+                src="/logo.png" 
+                alt="Genius Study Circle Logo" 
+                className="w-10 h-10 object-contain"
+              />
               <span className="font-bold text-xl">Genius Study Circle</span>
             </div>
             <p className="text-gray-400 mb-6 max-w-md">
