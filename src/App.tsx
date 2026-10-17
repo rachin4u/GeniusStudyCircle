@@ -494,7 +494,7 @@ function SuccessModal({ isOpen, onClose, formData }: { isOpen: boolean; onClose:
           Thank You, {formData.name || 'Student'}! 🎉
         </h3>
         <p className="text-gray-600 text-center mb-6">
-          Your free trial request has been received. We'll get back to you within 24 hours.
+          Your details have been sent to our team. We'll get back to you within 24 hours! ✉️
         </p>
 
         {/* Next steps */}
@@ -503,15 +503,15 @@ function SuccessModal({ isOpen, onClose, formData }: { isOpen: boolean; onClose:
           <ul className="space-y-2.5 text-sm text-indigo-800">
             <li className="flex items-start gap-2">
               <span className="text-indigo-500 font-bold">1.</span>
-              <span>We'll review your details and match you with the perfect tutor</span>
+              <span>Our team has received your details via email ✉️</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-indigo-500 font-bold">2.</span>
-              <span>Our team will call or WhatsApp you to schedule your FREE trial</span>
+              <span>We'll match you with the perfect tutor for your level</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-indigo-500 font-bold">3.</span>
-              <span>Attend your personalised trial lesson — no commitment needed!</span>
+              <span>We'll call or WhatsApp you within 24 hours to schedule your FREE trial</span>
             </li>
           </ul>
         </div>
@@ -567,27 +567,63 @@ function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Build WhatsApp message with form details
     const fullName = `${formData.firstName} ${formData.lastName}`.trim();
-    const whatsappMessage = encodeURIComponent(
-      `🎓 *Free Trial Request - Genius Study Circle*\n\n` +
-      `👤 *Name:* ${fullName}\n` +
-      `📧 *Email:* ${formData.email}\n` +
-      `📞 *Phone:* ${formData.phone}\n` +
-      `📚 *Level:* ${formData.level}\n` +
-      `💬 *Message:* ${formData.message || 'N/A'}\n\n` +
-      `I'd like to book my FREE trial lesson!`
-    );
 
-    // Simulate a brief loading state for UX
-    await new Promise(resolve => setTimeout(resolve, 1200));
+    try {
+      // Send form data to FormSubmit.co - delivers directly to geniusstudycircle.uk@gmail.com
+      const response = await fetch('https://formsubmit.co/ajax/geniusstudycircle.uk@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          name: fullName,
+          email: formData.email,
+          phone: formData.phone,
+          level: formData.level,
+          message: formData.message || 'N/A',
+          _subject: `🎓 New Free Trial Request from ${fullName} - Genius Study Circle`,
+          _template: 'box',
+        }),
+      });
 
-    // Open WhatsApp with pre-filled message (fallback delivery method)
-    window.open(`https://wa.me/447576996755?text=${whatsappMessage}`, '_blank');
+      if (response.ok) {
+        // Email sent successfully
+        setShowSuccess(true);
+        setFormData({ firstName: '', lastName: '', email: '', phone: '', level: '', message: '' });
+      } else {
+        // Fallback: open WhatsApp with pre-filled message
+        const whatsappMessage = encodeURIComponent(
+          `🎓 *Free Trial Request - Genius Study Circle*\n\n` +
+          `👤 *Name:* ${fullName}\n` +
+          `📧 *Email:* ${formData.email}\n` +
+          `📞 *Phone:* ${formData.phone}\n` +
+          `📚 *Level:* ${formData.level}\n` +
+          `💬 *Message:* ${formData.message || 'N/A'}\n\n` +
+          `I'd like to book my FREE trial lesson!`
+        );
+        window.open(`https://wa.me/447576996755?text=${whatsappMessage}`, '_blank');
+        setShowSuccess(true);
+        setFormData({ firstName: '', lastName: '', email: '', phone: '', level: '', message: '' });
+      }
+    } catch (error) {
+      // On network error, fallback to WhatsApp
+      const whatsappMessage = encodeURIComponent(
+        `🎓 *Free Trial Request - Genius Study Circle*\n\n` +
+        `👤 *Name:* ${fullName}\n` +
+        `📧 *Email:* ${formData.email}\n` +
+        `📞 *Phone:* ${formData.phone}\n` +
+        `📚 *Level:* ${formData.level}\n` +
+        `💬 *Message:* ${formData.message || 'N/A'}\n\n` +
+        `I'd like to book my FREE trial lesson!`
+      );
+      window.open(`https://wa.me/447576996755?text=${whatsappMessage}`, '_blank');
+      setShowSuccess(true);
+      setFormData({ firstName: '', lastName: '', email: '', phone: '', level: '', message: '' });
+    }
 
     setIsSubmitting(false);
-    setShowSuccess(true);
-    setFormData({ firstName: '', lastName: '', email: '', phone: '', level: '', message: '' });
   };
 
   return (
@@ -786,7 +822,7 @@ function Contact() {
                 )}
               </button>
               <p className="text-xs text-gray-400 text-center">
-                By submitting, you'll be redirected to WhatsApp to confirm your booking.
+                ✉️ Your details will be emailed directly to our team. We'll respond within 24 hours.
               </p>
             </form>
           </div>
